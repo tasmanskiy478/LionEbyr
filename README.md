@@ -1,2 +1,2 @@
 # LionEbyr
-Hard software on VBScript
+Python script, which create VBscript for saving files 
